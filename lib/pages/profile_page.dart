@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:profile_app2/comrpnents/profile_buttons.dart';
+import 'package:profile_app2/comrpnents/profile_count_info.dart';
 import 'package:profile_app2/comrpnents/profile_drawer.dart';
 import 'package:profile_app2/comrpnents/profile_header.dart';
 import 'package:profile_app2/comrpnents/profile_tab.dart';
-
-import '../comrpnents/profile_count_info.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -18,21 +17,24 @@ class ProfilePage extends StatelessWidget {
         title: Text("Profile"),
         centerTitle: true,
       ),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  ProfileHeader(),
-                  ProfileCountInfo(),
-                  ProfileButtons(),
-                ],
-              ),
-            )
-          ];
-        },
-        body: Expanded(child: ProfileTab()),
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                ProfileHeader(),
+                ProfileCountInfo(),
+                ProfileButtons(),
+              ],
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 400,
+              child: ProfileTab(),
+            ),
+          )
+        ],
       ),
     );
   }
